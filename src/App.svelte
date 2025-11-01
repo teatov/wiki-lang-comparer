@@ -41,12 +41,14 @@
   let infoMessage = $state<string | null>(null);
   let errorMessage = $state<string | null>(null);
   let langDiff = $state<Language[] | null>(null);
+  let listCopied = $state<boolean>(false);
 
   async function doTheThing() {
     isFetching = true;
     errorMessage = null;
     infoMessage = null;
     langDiff = null;
+    listCopied = false;
 
     try {
       const info = await fetchInfo();
@@ -144,6 +146,15 @@
     const languages = (await response.json()) as Language[];
     return languages;
   }
+
+  function copyListToClipboard() {
+    if (!langDiff) return;
+    const listString = langDiff
+      .map((lang) => `${lang.localname} (${lang.name})`)
+      .join('\n');
+    navigator.clipboard.writeText(listString);
+    listCopied = true;
+  }
 </script>
 
 <main class="flex h-full items-center justify-center">
@@ -181,19 +192,19 @@
     {#if infoMessage}<p>{@html infoMessage}</p>{/if}
     {#if errorMessage}<p class="text-danger">{@html errorMessage}</p>{/if}
     {#if langDiff}
-      <table class="mt-4">
+      <table class="mt-4 mb-2 w-full">
         <thead>
           <tr class="m-0 p-0">
             <th class="border px-2 py-1 font-bold">Language</th>
-            <th class="border px-2 py-1 font-bold">English name</th>
+            <th class="border px-2 py-1 font-bold">Native name</th>
             <th class="border px-2 py-1 font-bold">Source article</th>
           </tr>
         </thead>
         <tbody class="border-b">
           {#each langDiff as lang}
             <tr class="m-0 p-0 odd:bg-secondary/15">
-              <td class="border-x px-2">{lang.name}</td>
               <td class="border-x px-2">{lang.localname}</td>
+              <td class="border-x px-2">{lang.name}</td>
               <td class="border-x px-2"
                 ><a
                   href={`https://${lang.code}.wikipedia.org/wiki/${lang.key}`}
@@ -204,6 +215,13 @@
           {/each}
         </tbody>
       </table>
+      <button
+        class="p-2 bg-foreground text-background"
+        onclick={copyListToClipboard}
+        >Copy list to clipboard {#if listCopied}
+          (Copied!)
+        {/if}</button
+      >
     {/if}
     <p class="mt-4">
       Made by <a href="https://teatov.xyz" class="font-semibold underline"
