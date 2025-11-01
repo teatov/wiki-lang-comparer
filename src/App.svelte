@@ -163,7 +163,7 @@
   }
 </script>
 
-<main class="flex h-full items-center justify-center">
+<main class="flex h-full flex-col items-center justify-evenly">
   <div class="max-w-xl p-4">
     <p class="mb-4">
       Find the languages that one Wikipedia article has, but the other doesn't.
