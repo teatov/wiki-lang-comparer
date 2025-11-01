@@ -67,7 +67,7 @@
           )?.localname,
         }));
 
-      infoMessage = `${info.source.name} has ${info.source.languages.length} languages, and ${info.target.name} has ${info.target.languages.length}.<br />${info.source.name} has ${langDiff.length} languages that ${info.target.name} doesn't have.`;
+      infoMessage = `<strong>${info.source.name}</strong> has <strong>${info.source.languages.length}</strong> languages, and <strong>${info.target.name}</strong> has <strong>${info.target.languages.length}</strong>.<br /><strong>${info.source.name}</strong> has <strong>${langDiff.length}</strong> languages that <strong>${info.target.name}</strong> doesn't have.`;
     } catch (err) {
       console.error(err);
       isFetching = false;
