@@ -147,6 +147,12 @@
     return languages;
   }
 
+  function swapArticles() {
+    const temp = sourceArticleURL;
+    sourceArticleURL = targetArticleURL;
+    targetArticleURL = temp;
+  }
+
   function copyListToClipboard() {
     if (!langDiff) return;
     const listString = langDiff
@@ -173,6 +179,12 @@
         id="source-article-url"
       />
     </label>
+    <div class="text-center">
+      <button
+        class="px-4 py-1 bg-foreground text-background"
+        onclick={swapArticles}>Swap articles</button
+      >
+    </div>
     <label for="target-article-url" class="block mb-2">
       Target article URL
       <input
