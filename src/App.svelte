@@ -182,7 +182,8 @@
     <div class="text-center">
       <button
         class="px-4 py-1 bg-foreground text-background"
-        onclick={swapArticles}>Swap articles</button
+        onclick={swapArticles}
+        disabled={isFetching}>Swap</button
       >
     </div>
     <label for="target-article-url" class="block mb-2">
